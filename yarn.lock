@@ -312,21 +312,22 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@perkycrow/cli_tools@workspace:."
   dependencies:
-    "@perkycrow/eslint_config": "portal:../eslint_config"
+    "@perkycrow/eslint_config": "github:perkycrow/eslint_config#v0.1.0"
     eslint: "npm:^10.0.2"
     vitest: "npm:^3.1.3"
   languageName: unknown
   linkType: soft
 
-"@perkycrow/eslint_config@portal:../eslint_config::locator=%40perkycrow%2Fcli_tools%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@perkycrow/eslint_config@portal:../eslint_config::locator=%40perkycrow%2Fcli_tools%40workspace%3A."
+"@perkycrow/eslint_config@github:perkycrow/eslint_config#v0.1.0":
+  version: 0.1.0
+  resolution: "@perkycrow/eslint_config@https://github.com/perkycrow/eslint_config.git#commit=77b233decceb83ab6c49a25c94a8106496b62e68"
   dependencies:
     globals: "npm:^17.3.0"
   peerDependencies:
     eslint: ">=9"
+  checksum: 10c0/c0fa0267696996c5cbc0316a2dce7a2a5e303792731140281e4f96bb2287e4c764a23e66de04e5662d31c84a699e74e4f2158234d1dc8fc3e3ca3efc6d788a38
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "@rollup/rollup-android-arm-eabi@npm:4.60.4":
   version: 4.60.4
