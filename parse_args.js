@@ -20,31 +20,10 @@ export function parseArgs (argv, spec = {}) {
         }
 
         if (isFlagToken(token)) {
-            const [name, inlineValue] = splitInline(token)
-            const entry = lookup[name]
-
-            if (!entry) {
-                throw new CliError(`Unknown flag: ${name}`)
-            }
-
-            if (entry.spec.type === 'bool') {
-                if (inlineValue !== null) {
-                    throw new CliError(`Flag ${name} does not take a value`)
-                }
-                assign(result, entry, true)
-                continue
-            }
-
-            let value = inlineValue
-            if (value === null) {
-                value = argv[i + 1]
-                if (value === undefined) {
-                    throw new CliError(`Flag ${name} expects a value`)
-                }
+            const consumedNext = applyFlag(token, argv[i + 1], lookup, result)
+            if (consumedNext) {
                 i += 1
             }
-
-            assign(result, entry, coerce(entry, value, name))
             continue
         }
 
@@ -55,6 +34,36 @@ export function parseArgs (argv, spec = {}) {
     result._ = positionals
 
     return result
+}
+
+
+function applyFlag (token, nextToken, lookup, result) {
+    const [name, inlineValue] = splitInline(token)
+    const entry = lookup[name]
+
+    if (!entry) {
+        throw new CliError(`Unknown flag: ${name}`)
+    }
+
+    if (entry.spec.type === 'bool') {
+        if (inlineValue !== null) {
+            throw new CliError(`Flag ${name} does not take a value`)
+        }
+        assign(result, entry, true)
+        return false
+    }
+
+    if (inlineValue !== null) {
+        assign(result, entry, coerce(entry, inlineValue, name))
+        return false
+    }
+
+    if (nextToken === undefined) {
+        throw new CliError(`Flag ${name} expects a value`)
+    }
+
+    assign(result, entry, coerce(entry, nextToken, name))
+    return true
 }
 
 
