@@ -1,34 +1,3 @@
-/**
- * Tiny declarative argv parser shared across PerkyCrow CLI scripts.
- *
- * It generalizes the hand-rolled "handler map + for loop" pattern that was
- * duplicated across scripts (sprite_tool, snap, golden, leak, ...).
- *
- * Spec shape:
- *   {
- *     usage:    'yarn sprite <command> <file> [options]',
- *     description: 'optional blurb shown above the options in --help',
- *     positionals: ['command', 'file'],   // or [{name, help, required}]
- *     flags: {
- *       cols:      {type: 'int',  alias: '-c', default: null, help: 'Columns'},
- *       json:      {type: 'bool', help: 'Output as JSON'},
- *       ignore:    {type: 'string', multiple: true, help: 'Ignored regions'},
- *       key:       {parse: parseHexColor, help: 'Chroma key color'}
- *     }
- *   }
- *
- * A flag key in camelCase maps to the kebab-case CLI token automatically:
- *   keepKey -> --keep-key   (the parsed result keeps the camelCase key)
- *
- * Returns a plain object: every flag key is present (with its default), every
- * named positional is set, and `_` holds the full positional list.
- *
- * `--help` / `-h` print generated usage and exit(0) by default. Override what
- * gets printed with `spec.help` (a string, or a function that prints), and what
- * happens afterwards with `spec.onHelp` (defaults to `process.exit(0)`).
- */
-
-
 export class CliError extends Error {}
 
 
