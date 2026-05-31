@@ -153,6 +153,29 @@ describe('parseArgs', () => {
         expect(helped).toBe(true)
     })
 
+    test('spec.help as a function is invoked instead of the generated help', () => {
+        let printed = null
+        parseArgs(['-h'], {
+            help: () => {
+                printed = 'custom'
+            },
+            onHelp: () => {}
+        })
+        expect(printed).toBe('custom')
+    })
+
+    test('spec.help as a string is printed verbatim', () => {
+        const logs = []
+        const original = console.log
+        console.log = msg => logs.push(msg)
+        try {
+            parseArgs(['--help'], {help: 'VERBATIM HELP', onHelp: () => {}})
+        } finally {
+            console.log = original
+        }
+        expect(logs).toContain('VERBATIM HELP')
+    })
+
 })
 
 

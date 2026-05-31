@@ -23,7 +23,9 @@
  * Returns a plain object: every flag key is present (with its default), every
  * named positional is set, and `_` holds the full positional list.
  *
- * `--help` / `-h` print generated usage and exit(0) by default.
+ * `--help` / `-h` print generated usage and exit(0) by default. Override what
+ * gets printed with `spec.help` (a string, or a function that prints), and what
+ * happens afterwards with `spec.onHelp` (defaults to `process.exit(0)`).
  */
 
 
@@ -198,7 +200,14 @@ function bindPositionals (result, positionalSpec, positionals) {
 
 
 function handleHelp (spec) {
-    console.log(formatHelp(spec))
+    if (typeof spec.help === 'function') {
+        spec.help()
+    } else if (typeof spec.help === 'string') {
+        console.log(spec.help)
+    } else {
+        console.log(formatHelp(spec))
+    }
+
     if (spec.onHelp) {
         spec.onHelp()
     } else {
