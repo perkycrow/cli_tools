@@ -8,12 +8,14 @@
   "exports": {
     ".": "./index.js",
     "./format": "./format.js",
-    "./parse_args": "./parse_args.js"
+    "./parse_args": "./parse_args.js",
+    "./prompt": "./prompt.js"
   },
   "files": [
     "index.js",
     "format.js",
-    "parse_args.js"
+    "parse_args.js",
+    "prompt.js"
   ],
   "scripts": {
     "test": "vitest run",
