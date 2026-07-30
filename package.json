@@ -1,6 +1,6 @@
 {
   "name": "@perkycrow/cli_tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Small shared toolkit for PerkyCrow CLI scripts: terminal formatting and argument parsing",
   "type": "module",
   "license": "Apache-2.0",
