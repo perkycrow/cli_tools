@@ -3,6 +3,8 @@ export class CliError extends Error {}
 
 const BUILTIN_TYPES = new Set(['string', 'int', 'float', 'bool'])
 
+const NEGATIVE_NUMBER = /^-(\d+\.?\d*|\.\d+)$/
+
 
 export function parseArgs (argv, spec = {}) {
     const flags = spec.flags || {}
@@ -245,7 +247,7 @@ function appendRows (lines, rows) {
 
 
 function isFlagToken (token) {
-    return token.startsWith('-') && token !== '-'
+    return token.startsWith('-') && token !== '-' && !NEGATIVE_NUMBER.test(token)
 }
 
 

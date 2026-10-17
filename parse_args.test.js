@@ -102,6 +102,15 @@ describe('parseArgs', () => {
         expect(result._).toEqual(['extract', 'hero.png', 'extra'])
     })
 
+    test('a negative number is a positional value, not a flag', () => {
+        const result = parseArgs(['-1', '-0.5', '-.25'], {positionals: ['x', 'y', 'z']})
+        expect(result).toMatchObject({x: '-1', y: '-0.5', z: '-.25'})
+    })
+
+    test('a dash followed by letters stays an unknown flag', () => {
+        expect(() => parseArgs(['-1x'], {positionals: ['x']})).toThrow(/Unknown flag: -1x/)
+    })
+
     test('unset optional positionals are null', () => {
         const result = parseArgs(['only'], {positionals: ['command', 'file']})
         expect(result.command).toBe('only')
